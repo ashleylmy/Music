@@ -10,4 +10,5 @@ public class UC {
     public static final int NORM_SAMPLE_SIZE=25;
     public static final int NORM_COORD_MAX=1000;
     public static final int NO_MATCH_DIST=1000000;
+    public static final int DOT_THRESHOLD = 5;
 }

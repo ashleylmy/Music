@@ -5,6 +5,7 @@ import music.I;
 import music.UC;
 
 import java.awt.*;
+import java.io.Serializable;
 import java.util.ArrayList;
 
 public class Ink implements I.Show {
@@ -26,7 +27,7 @@ public class Ink implements I.Show {
     }
 
     //----------------------Norm----------------------------//
-    public static class Norm extends G.PL {
+    public static class Norm extends G.PL  implements Serializable {
         public static final int K=UC.NORM_SAMPLE_SIZE, MAX=UC.NORM_COORD_MAX;
         public static final G.VS NORM_BOX=new G.VS(0,0,MAX,MAX);
         public Norm() {

@@ -1,7 +1,7 @@
 package sandbox;
 
 import graphicsLib.Window;
-import reaction.ShapeTrainer;
+import reaction.ShapeTrainerApp;
 
 public class Main {
     //function signature
@@ -10,7 +10,7 @@ public class Main {
         //Window.PANEL= new Paint();
         //Window.PANEL= new Squares();
 //        Window.PANEL = new PaintInk();
-        Window.PANEL = new ShapeTrainer();
+        Window.PANEL = new ShapeTrainerApp();
         Window.launch();
     }
 }

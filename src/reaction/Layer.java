@@ -18,6 +18,8 @@ public class Layer extends ArrayList<I.Show> implements I.Show {
         byName.put(name, this);
     }
 
+    public static void nuke() { for(I.Show lay: ALL){((Layer)lay).clear();}}//casting into layers
+
     @Override
     public void show(Graphics g) {for(I.Show item:this){item.show(g);}}
 }

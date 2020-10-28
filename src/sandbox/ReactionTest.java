@@ -17,15 +17,8 @@ public class ReactionTest extends Window {
     public ReactionTest() {
         super("Reaction Test", UC.WINDOW_WIDTH, UC.WINDOW_HEIGHT);
         Reaction.initialReactions.addReaction(new Reaction("SW-SW") {
-            @Override
-            public int bid(Gesture g) {
-                return 0;
-            }
-
-            @Override
-            public void act(Gesture g) {
-                new Box(g.vs);
-            }
+            public int bid(Gesture g) { return 0; }
+            public void act(Gesture g) { new Box(g.vs); }
         });
     }
 
@@ -62,11 +55,41 @@ public class ReactionTest extends Window {
         public Box(G.VS vs) {
             super("Back");
             this.vs = vs;
+            //-------------------delete box-------------//
+            addReaction(new Reaction("S-S") {
+                public int bid(Gesture g) {
+                    //if two objects overlap, it will pick the box that x, y closer to the center of it
+                    int x =g.vs.xM(), y=g.vs.yL();
+                    //compound this, this refers to reaction
+                    //vs refers to the Box
+                    if(Box.this.vs.hit(x, y)){
+                        return Math.abs(x-Box.this.vs.xM());
+                    }else{
+                        return UC.NO_BID;
+                    }
+                }
+                public void act(Gesture g) {
+                    Box.this.delete();
+                }
+            });
+            //----------------change color--------------//
+            addReaction(new Reaction("DOT") {
+                public int bid(Gesture g) {
+                    int x =g.vs.xM(), y=g.vs.yM();
+                    if(Box.this.vs.hit(x, y)){
+                        return Math.abs(x-Box.this.vs.xM())+Math.abs(y-Box.this.vs.yM());
+                    }else{
+                        return UC.NO_BID;
+                    }
+                }
+                public void act(Gesture g) {
+                    Box.this.c=G.rndColor();
+                }
+            });
         }
 
         public void show(Graphics g) {
             vs.fill(g, c);
         }
-
     }
 }

@@ -18,6 +18,10 @@ public abstract class Reaction implements I.React{
         if(shape==null) System.out.println("WTF? - Shape.DB doesn't have : "+ shapeName);
     }
     public static Reaction best(Gesture g){return byShape.getList(g.shape).loBid(g);}
+
+    public static void nuke() { byShape=new Map(); initialReactions.enable();
+    }
+
     //
     public void enable(){List list=byShape.getList(shape); if(!list.contains(this)) list.add(this);}
 
@@ -41,6 +45,8 @@ public abstract class Reaction implements I.React{
             }
             return res;
         }
+
+        public void enable() { for(Reaction r:this){r.enable();} }
     }
 
     //----------------------------Map-----------------------------------//

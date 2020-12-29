@@ -97,7 +97,7 @@ public class Ink implements I.Show {
         public void up(int x, int y) {}
 
         @Override
-        public void show(Graphics g) { g.setColor(UC.INK_COLOR);bbox.draw(g); drawN(g, n); }
+        public void show(Graphics g) { g.setColor(UC.INK_COLOR); drawN(g, n); }
 
         @Override
         public boolean hit(int x, int y) { return true;}

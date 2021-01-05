@@ -77,7 +77,7 @@ public class G {
     public static class LoHi {
         public int lo, hi;
 
-        public LoHi(int min, int max) { this.lo = lo; this.hi = hi;}
+        public LoHi(int min, int max) { this.lo = min; this.hi = max;}
         public void set(int val){lo=val; hi=val;}
         public void add(int val){if(val<lo) lo=val; if(val>hi) hi=val;}
         public int size(){ if(hi<=lo) return 1; else return hi-lo;}
@@ -108,7 +108,7 @@ public class G {
             for(int i=1; i<n; i++){
                 g.drawLine(points[i-1].x,points[i-1].y,points[i].x,points[i].y );
             }
-            drawNDots(g, n);
+            //drawNDots(g, n);
         }
         public void draw(Graphics g){ drawN(g, points.length);}
         public  void drawNDots(Graphics g, int n){

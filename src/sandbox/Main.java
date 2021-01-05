@@ -13,7 +13,6 @@ public class Main {
         //Window.PANEL = new ShapeTrainerApp();
         //Window.PANEL=new ReactionTest();
         Window.PANEL=new Music();
-
         Window.launch();
     }
 }

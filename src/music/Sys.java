@@ -25,11 +25,14 @@ public class Sys extends Mass {
         staffs.add(new Staff(this, iStaff));
     }
 
-    public  int yTop(){return page.sysTop(iSys);}
+    public int yTop(){return page.sysTop(iSys);}
+    public int yBot(){return staffs.get(staffs.size()-1).yBot();}
 
     //--------------------------------Sys format-------------------------------//
     public static class Fmt extends ArrayList<Staff.Fmt>{
         public ArrayList<Integer> staffOffsets=new ArrayList<>();
+        public int maxH=8;
+
         public void addNew(int yOff){
             add(new Staff.Fmt());
             staffOffsets.add(yOff);

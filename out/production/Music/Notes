@@ -1,4 +1,0 @@
-Variable:
-1. static: live forever
-2. class: live when the Object lives
-3. function: live in function, vanish when function is runned

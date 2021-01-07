@@ -55,6 +55,23 @@ public class Bar extends Mass {
                 Bar.this.cycleType();
             }
         });
+
+        addReaction(new Reaction("DOT") { //Dot the barlines
+            @Override
+            public int bid(Gesture g) {
+                int x=g.vs.xM(), y=g.vs.yM();
+                if(y<Bar.this.sys.yTop()||y>Bar.this.sys.yBot()){ return UC.NO_BID;}// y is not in the sys, no bid
+                int dist=Math.abs(x-Bar.this.x);
+                if(dist>3*Page.PAGE.sysFmt.maxH){return UC.NO_BID;}
+                return dist;
+            }
+
+            @Override
+            public void act(Gesture g) {
+                if(g.vs.xM()<Bar.this.x){Bar.this.toggleLeft();}
+                else{Bar.this.toggleRight();}
+            }
+        });
     }
 
     public void show(Graphics g) {
@@ -94,6 +111,7 @@ public class Bar extends Mass {
                 thinBar(g, x+H, y1, y2);
                 wings(g, x+H, y1, y2, H, H);
             }
+            fatBar(g, x-H, y1, y2, H);
             }
 
     }

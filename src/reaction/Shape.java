@@ -157,6 +157,7 @@ public class Shape implements Serializable {
                 Shape.Prototype proto;
                 ns.shapeBeingTrained = Shape.getOrCreate(ns.name);
                 Prototype.List pList=ns.shapeBeingTrained.prototypes;
+                //click stored shape to remove from database
                 if(pList.size()>0 && y<UC.PROTOTYPE_LIST_Y_LIM){
                     int iProto=pList.nHit(x, y);
                     if(iProto<pList.size()) pList.remove(iProto);

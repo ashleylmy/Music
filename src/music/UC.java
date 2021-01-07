@@ -17,4 +17,5 @@ public class UC {
     public static final int PROTOTYPE_LIST_Y_LIM = PROTOTYPE_LIST_MARGIN + PROTOTYPE_LIST_SIZE;
     public static final int NO_BID = 10000;
     public static final int BAR_TO_MARGIN_SNAP = 30;
+    public static String FontName="Sinfonia";
 }

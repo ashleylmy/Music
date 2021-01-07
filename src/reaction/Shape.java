@@ -179,7 +179,7 @@ public class Shape implements Serializable {
             public static class NameState {
                 public static String
                         UNKNOWN = "<-unknown", ILLEGAL = "<-illegal", KNOWN = "<-known",
-                        INSTRUCTIONS = "type name and draw examples - space clears name - enter saves DB";
+                        INSTRUCTIONS = "type name and draw examples - space clears name - enter saves DB - click saved shape to delete from DB";
                 public String name = "";
                 public String state = ILLEGAL;
                 public Shape shapeBeingTrained;

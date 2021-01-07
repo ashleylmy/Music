@@ -114,6 +114,12 @@ public class Staff extends Mass {
         return yTop() + fmt.height();
     }
 
+    public void show(Graphics g){
+        g.setColor(Color.BLUE);
+        if(initialClef!=null){
+        initialClef.showAt(g, Page.PAGE.xMargin.lo+3* fmt.H, yTop(), fmt.H );}
+    }
+
     //--------staff format
     public static class Fmt {
         public int nlines = 5;

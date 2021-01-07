@@ -36,10 +36,10 @@ public class Music extends Window {
         Layer.ALL.show(g);
         g.setColor(Color.BLACK);
         Ink.BUFFER.show(g);
-        if (Page.PAGE != null) {
-            Glyph.CLEF_G.showAt(g, 8, Page.PAGE.xMargin.lo, Page.PAGE.yMargin.lo + 4 * 8);
-            Glyph.HEAD_Q.showAt(g, 8, 200, Page.PAGE.yMargin.lo + 4 * 8);
-        }
+//        if (Page.PAGE != null) {
+//            Glyph.CLEF_G.showAt(g, 8, Page.PAGE.xMargin.lo, Page.PAGE.yMargin.lo + 4 * 8);
+//            Glyph.HEAD_Q.showAt(g, 8, 200, Page.PAGE.yMargin.lo + 4 * 8);
+//        }
     }
 
     public void mousePressed(MouseEvent me) {

@@ -10,9 +10,9 @@ public class Main {
         //Window.PANEL= new Paint();
         //Window.PANEL= new Squares();
         //Window.PANEL = new PaintInk();
-        Window.PANEL = new ShapeTrainerApp();
+        //Window.PANEL = new ShapeTrainerApp();
         //Window.PANEL=new ReactionTest();
-        //Window.PANEL=new Music();
+        Window.PANEL=new Music();
         Window.launch();
     }
 }

@@ -29,7 +29,6 @@ public class Page extends Mass {
 
 
         //disable initial reaction. add new staff and system
-        // TODO: create two reactions
         Reaction.initialReactions.get(0).disable();
         addNewStaffFmtToSysFmt(y);
         addNewSys();

@@ -22,4 +22,5 @@ public abstract class Mass extends Reaction.List implements I.Show {
     }
 
     public void show(Graphics g){ }
+
 }

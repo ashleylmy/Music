@@ -12,13 +12,14 @@ public class Sys extends Mass {
     public Page page;
     public int iSys;
     public Sys.Fmt fmt;
-
+    public Time.List times;
 
 
     public Sys(Page page, int iSys) {
         super("BACK");
         this.page = page;
         this.iSys = iSys;
+        times=new Time.List(this); // the system has a time list
     }
 
     public void addNewStaff(int iStaff){
@@ -27,6 +28,11 @@ public class Sys extends Mass {
 
     public int yTop(){return page.sysTop(iSys);}
     public int yBot(){return staffs.get(staffs.size()-1).yBot();}
+
+    // get time
+    public Time getTime(int x){
+        return times.getTime(x);
+    }
 
     //--------------------------------Sys format-------------------------------//
     public static class Fmt extends ArrayList<Staff.Fmt>{

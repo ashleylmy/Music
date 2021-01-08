@@ -47,7 +47,6 @@ public class Staff extends Mass {
 
         //toggle bar continues
         addReaction(new Reaction("S-S") {
-
             public int bid(Gesture g) {
                 if(Staff.this.sys.iSys!=0){return UC.NO_BID;}//only do it on the top system
                 int y1=g.vs.yL(), y2=g.vs.yH();
@@ -100,6 +99,63 @@ public class Staff extends Mass {
             }
         });
 
+        //add note heads
+        addReaction(new Reaction("SW-SW") {
+            @Override
+            public int bid(Gesture g) {
+                int x= g.vs.xM(), y=g.vs.yM();
+                G.LoHi m=Page.PAGE.xMargin;
+                if(x<m.lo||x>m.hi){return UC.NO_BID;}
+                int h= Staff.this.H(), top=Staff.this.yTop()-h, bot=Staff.this.yBot()+h;
+                if(y<top||y>bot){return UC.NO_BID;}
+                return 10;
+            }
+
+            @Override
+            public void act(Gesture g) {
+                new Head(Staff.this, g.vs.xM(), g.vs.yM());
+            }
+        });
+
+        // add quarter rest backwards 7
+        addReaction(new Reaction("W-S") {
+            @Override
+            public int bid(Gesture g) {
+                int x= g.vs.xL(), y=g.vs.yM();
+                G.LoHi m=Page.PAGE.xMargin;
+                if(x<m.lo||x>m.hi){return UC.NO_BID;}
+                int h= Staff.this.H(), top=Staff.this.yTop()-h, bot=Staff.this.yBot()+h;
+                if(y<top||y>bot){return UC.NO_BID;}
+                return 10;
+            }
+
+            //
+            @Override
+            public void act(Gesture g) {
+                Time t=Staff.this.sys.getTime(g.vs.xL());
+                new Rest(Staff.this, t);
+            }
+        });
+
+        // add 1/8 rest, like 7
+        addReaction(new Reaction("E-S") {
+            @Override
+            public int bid(Gesture g) {
+                int x= g.vs.xL(), y=g.vs.yM();
+                G.LoHi m=Page.PAGE.xMargin;
+                if(x<m.lo||x>m.hi){return UC.NO_BID;}
+                int h= Staff.this.H(), top=Staff.this.yTop()-h, bot=Staff.this.yBot()+h;
+                if(y<top||y>bot){return UC.NO_BID;}
+                return 10;
+            }
+
+            //
+            @Override
+            public void act(Gesture g) {
+                Time t=Staff.this.sys.getTime(g.vs.xL());
+                (new Rest(Staff.this, t)).nFlag=1; //change new rest's nFlag to 1
+            }
+        });
     }
 
     public int sysOff() {
@@ -112,6 +168,17 @@ public class Staff extends Mass {
 
     public int yBot() {
         return yTop() + fmt.height();
+    }
+
+    public int H(){return fmt.H;}
+    //convert line value to y value
+    public int yLine(int line){return yTop()+line*H();}
+    //convert the y value to line value
+    public int lineOfY(int y){
+        int h=H();
+        int BIAS=100;
+        int top=yTop()-h*BIAS;
+        return (y-top+h/2)/h-BIAS;
     }
 
     public void show(Graphics g){

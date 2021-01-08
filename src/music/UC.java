@@ -18,4 +18,6 @@ public class UC {
     public static final int NO_BID = 10000;
     public static final int BAR_TO_MARGIN_SNAP = 30;
     public static String FontName="Sinfonia";
+    //for Time
+    public static final int SNAP_TIME=30;
 }

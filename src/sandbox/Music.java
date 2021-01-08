@@ -14,7 +14,13 @@ import java.awt.*;
 import java.awt.event.MouseEvent;
 
 public class Music extends Window {
-    public Layer BACK = new Layer("BACK"), FORE = new Layer("FORE");
+
+    static {
+       new Layer("BACK");
+       new Layer("NOTE");
+       new Layer("FORE");
+
+    }
 
     public Music() {
         super("Music", UC.WINDOW_WIDTH, UC.WINDOW_HEIGHT);

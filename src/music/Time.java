@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 public class Time {
     public int x;
+    public Head.List heads=new Head.List();
 
     private Time(int x, List list) {
         this.x = x;

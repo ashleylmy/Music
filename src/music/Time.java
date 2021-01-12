@@ -13,6 +13,24 @@ public class Time {
         list.add(this);
     }
 
+    public void unStemHead(int y1, int y2){
+        for(Head head:heads){
+            int y =head.y(); //y for this head
+            if(y>y1 && y<y2){head.unStem();}
+        }
+    }
+
+    public void stemHead(Staff staff, boolean up, int y1, int y2){
+        Stem stem= new Stem(staff, up);
+        for(Head head:heads){
+            int y =head.y(); //y for this head
+            if(y>y1 && y<y2){head.joinStem(stem);}
+        }
+        if(stem.heads.size()>0){
+            stem.setWrongSize();
+        }
+    }
+
     //----------------List of Time-----------------//
     public static class List extends ArrayList<Time> {
         public Sys sys;

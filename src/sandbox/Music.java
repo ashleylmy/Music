@@ -42,13 +42,13 @@ public class Music extends Window {
         Layer.ALL.show(g);
         g.setColor(Color.BLACK);
         Ink.BUFFER.show(g);
-        if (Page.PAGE != null) {
-            int h=32;
+//        if (Page.PAGE != null) {
+//            int h=32;
 //            Glyph.CLEF_G.showAt(g, 8, Page.PAGE.xMargin.lo, Page.PAGE.yMargin.lo + 4 * 8);
-            Glyph.HEAD_Q.showAt(g, h, 200, Page.PAGE.yMargin.lo + 4 * h);
-            g.setColor(Color.RED);
-            g.drawRect(200, Page.PAGE.yMargin.lo+3*h, 24*h/10,2*h);
-        }
+//            Glyph.HEAD_Q.showAt(g, h, 200, Page.PAGE.yMargin.lo + 4 * h);
+//            g.setColor(Color.RED);
+//            g.drawRect(200, Page.PAGE.yMargin.lo+3*h, 24*h/10,2*h);
+//        }
     }
 
     public void mousePressed(MouseEvent me) {

@@ -29,6 +29,7 @@ public class Time {
         if(stem.heads.size()>0){
             stem.setWrongSize();
         }
+        stem.staff.sys.stems.addStem(stem);
     }
 
     //----------------List of Time-----------------//

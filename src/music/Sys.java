@@ -13,6 +13,7 @@ public class Sys extends Mass {
     public int iSys;
     public Sys.Fmt fmt;
     public Time.List times;
+    public Stem.List stems=new Stem.List();
 
 
     public Sys(Page page, int iSys) {

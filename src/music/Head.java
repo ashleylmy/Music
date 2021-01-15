@@ -81,10 +81,36 @@ public class Head extends Mass implements Comparable<Head>{
                 Head.this.stem.cycleDot();
             }
         });
+
+        //delete a head
+        addReaction(new Reaction("S-N") {
+            @Override
+            public int bid(Gesture g) {
+                int w2=Head.this.w()/2, h=Head.this.staff.H();
+                int x= g.vs.xM(), xH=x()+w2;//center of the head
+                int dx=Math.abs(x-xH);
+                if(dx>w2){return UC.NO_BID;}
+                int y=g.vs.yL(), yH=y(), dy=Math.abs(y-yH);
+                if(dy>h){return UC.NO_BID;}
+                return dx+dy;
+            }
+
+            @Override
+            public void act(Gesture g) {
+                Head.this.deleteHead();
+            }
+        });
+    }
+
+    public void deleteHead() {
+            unStem();
+            time.removeHead(this);
+            deleteMass();
+
     }
 
     public void show(Graphics g) {
-        g.setColor(wrongSide ? Color.RED: Color.BLUE);
+        g.setColor(stem==null ? Color.GRAY: Color.BLACK);
         int h = staff.H();
         (forcedGlyph != null ? forcedGlyph : normalGlyph()).showAt(g, h, x(), staff.yTop() + line * h);
         if(stem!=null){
@@ -102,6 +128,8 @@ public class Head extends Mass implements Comparable<Head>{
             if (stem.heads.size() == 0) {
                 //if the head is the last
                 stem.deleteStem();
+            }else {
+                stem.setWrongSize();
             }
             stem = null;
             wrongSide = false;
@@ -133,12 +161,6 @@ public class Head extends Mass implements Comparable<Head>{
         int res=time.x;
         if(wrongSide){res+=(stem!=null &&stem.isUp)? w(): -w();}
         return res;
-    }
-
-    //delete head
-    //this is a stub
-    public void deleteMass() {
-        time.heads.remove(this);
     }
 
     //get the note head width

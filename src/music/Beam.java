@@ -38,6 +38,13 @@ public class Beam extends Mass {
         }
     }
 
+    public void removeStem(Stem stem) {
+            if(stem==first() ||stem==last()) {
+                deleteBeam();
+            }else{stems.remove(stem);
+            stems.sort();}
+    }
+
     public void show(Graphics g) {
         g.setColor(Color.BLACK);
         drawBeamGroup(g);
@@ -144,6 +151,7 @@ public class Beam extends Mass {
             return (y2 < y && y < y1);
         }
     }
+
 
 
 }

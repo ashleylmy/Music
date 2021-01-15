@@ -19,6 +19,12 @@ public class Time {
             if(y>y1 && y<y2){head.unStem();}
         }
     }
+    public void removeHead(Head h){
+        heads.remove(h);
+        if(heads.size()==0){
+            h.staff.sys.times.remove(this);
+        }
+    }
 
     //moved this function to Stem class.
 /*    public void stemHead(Staff staff, boolean up, int y1, int y2){

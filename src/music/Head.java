@@ -57,7 +57,8 @@ public class Head extends Mass implements Comparable<Head>{
                 int w = Head.this.w();
                 boolean up = x >( t.x + w / 2);
                 if (Head.this.stem == null) {
-                    t.stemHead(staff, up, y1, y2);
+                    //t.stemHead(staff, up, y1, y2);
+                    Stem.getStem(staff, time, y1, y2, up);
                 }else{
                     t.unStemHead(y1, y2);
                 }

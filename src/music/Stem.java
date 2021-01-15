@@ -9,19 +9,23 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 
-public class Stem extends Duration implements Comparable<Stem>{
+public class Stem extends Duration implements Comparable<Stem> {
     public Staff staff;
-    public Head.List heads = new Head.List();
+    public Head.List heads;
     boolean isUp = true;
-    public Beam beam=null;
+    public Beam beam = null;
 
-    public Stem(Staff staff, boolean up) {
+    public Stem(Staff staff, Head.List heads, boolean up) {
         super();
         this.staff = staff;
         this.isUp = up;
-
-
-        //staff.sys.stems.add(this);    //Done in stem heads in Time
+        for (Head h : heads) {
+            h.unStem();
+            h.stem = this;
+        }
+        this.heads = heads;
+        staff.sys.stems.addStem(this);
+        setWrongSize();
 
         //increment flags
         addReaction(new Reaction("E-E") {
@@ -50,6 +54,41 @@ public class Stem extends Duration implements Comparable<Stem>{
         });
     }
 
+    // factory method gets a stem IF there are heads that match the y values at the given time
+    public static Stem getStem(Staff staff, Time time, int y1, int y2, boolean up) {
+        Head.List heads = new Head.List();
+        for (Head h : time.heads) {
+            int yH = h.y();
+            if (yH > y1 && yH < y2) {
+                heads.add(h);
+            }
+        }
+        if (heads.size() == 0) {
+            return null;
+        } // no stem created if no heads
+        Beam b = internalStem(staff.sys, time.x, y1, y2); // possibly this is internal stem in beamed group
+        Stem res = new Stem(staff, heads, up); // create the stem
+        if (b != null) {
+            b.addStem(res);
+            res.nFlag = 1;
+        } // if it was internal, then join the beam and gets one flag.
+        return res;
+    }
+
+    // returns non-null IF we find a beam crossed by line
+    private static Beam internalStem(Sys sys, int x, int y1, int y2) {
+        for (Stem s : sys.stems) {
+            if (s.beam != null && s.x() < x && s.yLo() < y2 && s.yHi() > y1) {
+                int bx = s.beam.first().x(), by = s.beam.first().yBeamEnd();
+                int ex = s.beam.last().x(), ey = s.beam.last().yBeamEnd();
+                if (Beam.verticalLineCrossesSegment(x, y1, y2, bx, by, ex, ey)) {
+                    return s.beam;
+                }
+            }
+        }
+        return null;
+    }
+
     private int bidLineCrossStem(Gesture g) {
         int y = g.vs.yM(), x1 = g.vs.xL(), x2 = g.vs.xH(), xs = Stem.this.heads.get(0).time.x; //xs is the stem's x
         if (x1 > xs || x2 < xs) {
@@ -59,7 +98,7 @@ public class Stem extends Duration implements Comparable<Stem>{
         if (y < y1 || y > y2) {
             return UC.NO_BID;
         }
-        return Math.abs(y - (y1 + y2) / 2);
+        return Math.abs(y - (y1 + y2) / 2) + 55;//biased to lose bid to a beam
     }
 
     @Override
@@ -67,9 +106,10 @@ public class Stem extends Duration implements Comparable<Stem>{
         //make sure there are heads drew before
         if (nFlag >= -1 && heads.size() > 0) {
             int x = x(), h = staff.H(), yH = yFirstHead(), yB = yBeamEnd();
+            g.setColor(this.beam == null ? Color.BLACK : Color.ORANGE);
             g.drawLine(x, yH, x, yB);
 
-            if (nFlag > 0) {
+            if (nFlag > 0 && beam == null) {
                 if (nFlag == 1) {
                     (isUp ? Glyph.FLAG1D : Glyph.FLAG1U).showAt(g, h, x, yB);
                 }
@@ -106,6 +146,10 @@ public class Stem extends Duration implements Comparable<Stem>{
     }
 
     public int yBeamEnd() {
+        if (this.beam != null && beam.stems.size() > 1 && beam.first() != this && beam.last() != this) {
+            Stem b = beam.first(), e = beam.last();
+            return Beam.yOfX(x(), b.x(), b.yBeamEnd(), e.x(), e.yBeamEnd());
+        }
         Head h = lastHead();
         int line = h.line;
         //default extension one octave;
@@ -159,25 +203,44 @@ public class Stem extends Duration implements Comparable<Stem>{
 
     @Override
     public int compareTo(Stem stem) {
-        return x()-stem.x();
+        return x() - stem.x();
     }
 
     //------------------------List of Stems------------------//
     public static class List extends ArrayList<Stem> {
+
         public G.LoHi yRange;
-        public void addStem(Stem s){
-            if(yRange==null){yRange=new G.LoHi(s.yLo(), s.yHi());}
+
+        public void addStem(Stem s) {
+            if (yRange == null) {
+                yRange = new G.LoHi(s.yLo(), s.yHi());
+            }
             yRange.add(s.yLo());
             yRange.add(s.yHi());
             add(s);
         }
 
-        public boolean fastReject(int y1, int y2){
-            return y1>yRange.hi || y2<yRange.lo;
+        public boolean fastReject(int y1, int y2) {
+            return y1 > yRange.hi || y2 < yRange.lo;
         }
 
-        public void sort(){
+        public void sort() {
             Collections.sort(this);
+        }
+
+        public ArrayList<Stem> allIntersectors(int x1, int y1, int x2, int y2) {
+            Stem.List res = new Stem.List();
+            for (Stem s : this) {
+                int x = s.x(), y = Beam.yOfX(x, x1, y1, x2, y2);
+                if (x > x1 && x < x2 && y > s.yLo() && y < s.yHi()) {
+                    System.out.print("x, y "+ "("+ x+ ","+ y+ ")");
+                    System.out.print("x1, y1 "+ "("+ x1+ ","+ y1+ ")");
+                    System.out.print("x2, y2 "+ "("+ x2+ ","+ y2+ ")");
+                    System.out.println("ylo, yhi "+ "("+ s.yLo()+ ","+ s.yHi()+ ")");
+                    res.add(s);
+                }
+            }
+            return res;
         }
     }
 }

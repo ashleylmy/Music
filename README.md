@@ -4,10 +4,10 @@
     In main: switch to "Window.PANEL = new ShapeTrainerApp();" and train new gestures.
 
 ##  Create different layer for music notation system, Draw different Clefs and notes with stem, beam
-    "E-W" start with a new Staff <br />
-    "E-W" add a new Staff to the current system <br />
-    "W-W" copy and add a new current system <br />
-    "S-S" draw bar line <br />
+    "E-W" start with a new Staff
+    "E-W" add a new Staff to the current system
+    "W-W" copy and add a new current system
+    "S-S" draw bar line
     "SE-SW" draw F clef <br />
     "SW-SE" draw G clef <br />
     "SW-SW" add note head<br />

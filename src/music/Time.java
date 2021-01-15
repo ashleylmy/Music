@@ -20,7 +20,8 @@ public class Time {
         }
     }
 
-    public void stemHead(Staff staff, boolean up, int y1, int y2){
+    //moved this function to Stem class.
+/*    public void stemHead(Staff staff, boolean up, int y1, int y2){
         Stem stem= new Stem(staff, up);
         for(Head head:heads){
             int y =head.y(); //y for this head
@@ -31,6 +32,7 @@ public class Time {
         }
         stem.staff.sys.stems.addStem(stem);
     }
+*/
 
     //----------------List of Time-----------------//
     public static class List extends ArrayList<Time> {
